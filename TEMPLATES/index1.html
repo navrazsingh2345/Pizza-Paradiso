@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="icon" href="{{url_for('static',filename='img/logo.png')}}" type="image/x-icon">
+    <title>Pizza Paradiso</title>
+
+    <!-- Inside the head section or just before the closing </body> tag -->
+    <script>
+
+
+        var cartItems = [];
+
+function addToCart(productName, price) {
+    // Add the selected item to the cart
+    cartItems.push({
+        name: productName,
+        price: price
+    });
+
+    // Store cart items in session storage
+    sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+    
+    // Display a popup message
+    var popup = document.createElement("div");
+    popup.id = "popup";
+    popup.classList.add("popup");
+    var popupMessage = document.createElement("span");
+    popupMessage.id = "popupMessage";
+    popupMessage.classList.add("popup-message");
+    popupMessage.textContent = productName + " has been added to your cart!";
+    popup.appendChild(popupMessage);
+    document.body.appendChild(popup);
+    
+    // Remove the popup after 3 seconds
+    setTimeout(function() {
+        popup.remove();
+    }, 1500);
+}
+
+
+
+        // dropdown menu 
+        function toggleDropdown() {
+        var dropdown = document.getElementById("menuDropdown");
+        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    }
+
+
+    </script>
+
+    
+</head>
+
+<body>
+
+<!-- nav bar  -->
+<header>
+    <div class="logo">
+        <a href="#">Pizza <span>Paradiso</span></a>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li class="dropdown-btn" onclick="toggleDropdown()">Menu
+                <div class="dropdown" id="menuDropdown">
+                    <a href="#shop">Pizzas</a>
+                    <a href="#garlic">Garlic Breads</a>
+                    <a href="#dessert">Desserts</a>
+                </div>
+            </li>
+            <li><a href="http://localhost:5000/Review">Reviews</a></li>
+            <li><a href="#aboutus">About Us</a></li>
+            <li><a href="http://localhost:5000/login">Login</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+    <div class="content">
+        <h2>Pizza Paradiso</h2>
+        <p>Crafting moments of delight with every slice</p>
+    </div>
+
+<!-- Menu  -->
+
+    <div class="menu" id="menu">
+        <div class="menu-header">
+            <h3>Menu</h3>
+            <h4>Pizza Paradiso Menu</h4>
+        </div>
+        <div class="menu-content">
+            <div class="hot-coffees">
+                <div class="hot-coffees-image">
+                    <img src="{{url_for('static',filename='img/pizza.jpg')}}" alt="">
+                </div>
+                <div class="hot-coffees-body">
+                    <h2>Pizza</h2>
+                    <label>Discover pizza perfection on our menu – where each slice is a culinary delight crafted for your enjoyment.</label>
+                </div>
+            </div>
+            <div class="cold-coffees">
+                <div class="cold-coffees-image">
+                    <img src="{{url_for('static',filename='img/GARLIC BREAD.jpg')}}" alt="">
+                </div>
+                <div class="cold-coffees-body">
+                    <h2>Garlic Breads</h2>
+                    <label>A golden delight with a symphony of savory garlic, crispy perfection, and irresistible satisfaction.</label>
+                </div>
+            </div>
+            <div class="frappucino-coffees">
+                <div class="frappucino-coffees-image">
+                    <img src="{{url_for('static',filename='img/chocolavacake.jpg')}}" alt="">
+                </div>
+                <div class="frappucino-coffees-body">
+                    <h2>Desserts</h2>
+                    <label>Indulge in the sweetness of life with our delectable desserts – each bite is a celebration of flavor and joy.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Pizzas  -->
+
+    <div class="shop" id="shop">
+        <div class="shop-header">
+            <h3>Pizzas</h3>
+            <h4>Pizza Paradiso</h4>
+        </div>
+        <div class="shop-box">
+            <div class="item-1">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/Margherita.jpg')}}" >
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 499</label>
+                        <h3>MARGHERITA</h3>
+                        <label>A hugely popular margherita, with a deliciously tangy single cheese topping</label>
+                    <div class="mess">Create account to Order Now!</div>
+                        
+                        
+                        <!-- Inside the card-body for Flat White -->
+                    
+
+                    </div>
+                </div>
+            </div>
+            <div class="item-2">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/Farmhouse.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <label class="cash">&#8377 689</label>
+                        <h3>FARMHOUSE</h3>
+                        <label>
+                            Savor a veggie-packed pizza featuring crisp capsicum mushrooms, and tomatoes</label>
+                            <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-3">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/Peppy_Paneer.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 689</label>
+                        <h3>PEPPY PANEER</h3>
+                        <label>Chunky paneer with crisp capsicum and spicy red pepper - quite a mouthful!</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-4">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/IndianTandooriPaneer.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <label class="cash">&#8377 799</label>
+                        <h3>INDI TANDOORI PANEER</h3>
+                        <label>It is hot. It is spicy.Tandoori paneer with capsicum I red paprika I mint mayo</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-5">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/Corn_&_Cheese.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 609</label>
+                        <h3>CORN AND CHEESE</h3>
+                        <label>Cheese I Golden Corn | Cheese n Corn Pizza</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-6">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/Fresh_Veggie.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <label class="cash">&#8377 609</label>
+                        <h3>FRESH VEGGIE</h3>
+                        <label>Onion & Capsicum with loads of cheese</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-7">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/Veggie_Paradise.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 689</label>
+                        <h3>VEGGIE PARADISE</h3>
+                        <label>Goldern Corn, Black Olives, Capsicum & Red Paprika</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-8">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/Paneer_Makhni.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <label class="cash">&#8377 609</label>
+                        <h3>PANEER MAKHNI</h3>
+                        <label>Paneer and Capsicum on Makhani Sauce</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-9">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/Veg_Extravaganza.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <label class="cash">&#8377 799</label>
+                        <h3>VEG EXTRAVAGANZA</h3>
+                        <label>A pizza with golden corn, exotic black olives, crunchy onions, crisp capsicum, succulent mushrooms, juicyfresh tomatoes and jalapeno - with extra cheese to go all around.</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-10">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/Fresh_Veggie.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <label class="cash">&#8377 609</label>
+                        <h3>VEG DELIGHT</h3>
+                        <label>For a vegetarian looking for a BIG treat that goes easy on the spices, this one's got it all.. The onions, the capsicum, those delectable mushrooms - with paneer and corn to top it all.</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-11">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/Mexican_Green_Wave.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <label class="cash">&#8377 689</label>
+                        <h3>MEXICAN GREEN WAVE</h3>
+                        <label>A vegetarian pizza loaded with crunchy onions, crisp grilled capsicum, juicy red tomatoes and fresh jalapeno with a liberal sprinkling of exotic Mexican herbs.</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-11">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/NonVegSupreme.png')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <label class="cash">&#8377 919</label>
+                        <h3>NON VEG SUPREME</h3>
+                        <label>Bite into the supreme delight of Black Olives, Onions, Mushrooms, BBQ Chicken, Peri-Peri Chicken, and Grilled Chicken Rashers, showcasing an medley of exquisite flavors</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-12">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/ChickenGoldenDelight.png')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <label class="cash">&#8377 829</label>
+                        <h3>CHICKEN GOLDEN DELIGHT</h3>
+                        <label>Mmm! Barbeque chicken with a topping of golden corn loaded with extra cheese. Worth its weight in gold!</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-13">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/ChickenDominator.png')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <label class="cash">&#8377 919</label>
+                        <h3>CHICKEN DOMINATOR</h3>
+                        <label>Treat your taste buds with Double Pepper Barbecue Chicken, Peri-Peri Chicken, Chicken Tikka & Grilled Chicken</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-14">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/IndiChickenTikka.png')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <label class="cash">&#8377 919</label>
+                        <h3>INDI CHICKEN TIKKA</h3>
+                        <label>The wholesome flavour of tandoori masala with Chicken tikka I onion I red paprika I mint mayo</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-15">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/ChickenPepperoni.png')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <label class="cash">&#8377 869</label>
+                        <h3>CHICKEN PEPPERONI</h3>
+                        <label>A classic American taste! Relish the delectable flavor of Chicken Pepperoni, topped with extra cheese</label>
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Garlic Breads  -->
+
+    <div class="shop" id="garlic">
+        <div class="shop-header">
+            <h3>Garlic Breads & More</h3>
+            <h4>Pizza Paradiso</h4>
+        </div>
+        <div class="shop-box">
+            <div class="item-1">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/Garlic-Bread.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 109</label>
+                        <h3>GARLIC BREADSTICKS</h3>
+                        <label>The endearing tang of garlic-infused breadsticks, baked to perfection, delivers an irresistible and aromatic delight</label>
+                        <!-- Inside the card-body for Flat White -->
+                        <div class="mess">Create account to Order Now!</div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item-2">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/stuffed-garlic-breadstick.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 159</label>
+                        <h3>STUFFED GARLIC BREAD</h3>
+                        <label>Freshly Baked Garlic Bread stuffed with mozzarella cheese, sweet corns & tangy and spicy jalapeños</label>
+                        <!-- Inside the card-body for Flat White -->
+                        <div class="mess">Create account to Order Now!</div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item-3">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/chickengarlicbread.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 169</label>
+                        <h3>CHICKEN PEPPERONI STUFFED GARLIC BREAD</h3>
+                        <label>Freshly Baked Garlic Bread stuffed with Delectable Chicken Pepperoni</label>
+                        <!-- Inside the card-body for Flat White -->
+                        <div class="mess">Create account to Order Now!</div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item-4">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/paneerbread.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 169</label>
+                        <h3>PANEER TIKKA STUFFED GARLIC BREAD</h3>
+                        <label>Freshly Baked Stuffed Garlic Bread with Cheese, Onion and Paneer Tikka fillings</label>
+                        <!-- Inside the card-body for Flat White -->
+                        <div class="mess">Create account to Order Now!</div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item-5">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/TacoMexicana.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 209</label>
+                        <h3>TACO MEXICANA VEG</h3>
+                        <label>A crispy flaky wrap filled with Mexican Arancini Bean Patty rolled over a creamy Harissa Sauce</label>
+                        <!-- Inside the card-body for Flat White -->
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-6">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/TacoMexicanaNV.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 279</label>
+                        <h3>TACO MEXICANA NON VEG</h3>
+                        <label>A crispy flaky wrap filled with Hot and Smoky Chicken Patty rolled over a creamy Harissa Sauce</label>
+                        <!-- Inside the card-body for Flat White -->
+                        <div class="mess">Create account to Order Now!</div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item-7">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/crinkle_fries.png')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 109</label>
+                        <h3>PERI-PERI FRIES</h3>
+                        <label>Crispy wavy masala coated fries served with a spicy tomato chilli sauce</label>
+                        <!-- Inside the card-body for Flat White -->
+                        <div class="mess">Create account to Order Now!</div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item-8">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/potato_cheese_shots.png')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 149</label>
+                        <h3>POTATO CHEESE BITES</h3>
+                        <label>Crisp and golden outside,flavorful burst of cheese, potato & spice inside</label>
+                        <!-- Inside the card-body for Flat White -->
+                        <div class="mess">Create account to Order Now!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desserts  -->
+
+    <div class="shop" id="dessert">
+        <div class="shop-header">
+            <h3>Desserts</h3>
+            <h4>Pizza Paradiso</h4>
+        </div>
+        <div class="shop-box">
+            <div class="item-1">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/chocolavacake.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 119</label>
+                        <h3>CHOCOLAVA CAKE</h3>
+                        <label>Chocolate lovers delight! Indulgent, gooey molten lava inside chocolate cake</label>
+                        <!-- Inside the card-body for Flat White -->
+                        <div class="mess">Create account to Order Now!</div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item-1">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/Redvelvetcake.jpeg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 149</label>
+                        <h3>RED VELVET LAVA CAKE</h3>
+                        <label>A truly indulgent experience with sweet and rich red velvet cake on a creamy base</label>
+                        <!-- Inside the card-body for Flat White -->
+                        <div class="mess">Create account to Order Now!</div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item-1">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/MousseCake.jpg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 169</label>
+                        <h3>MOUSSE CAKE</h3>
+                        <label> Rich layers: Butterscotch Cream over Dark Chocolate Cake with choco toppings</label>
+                        <!-- Inside the card-body for Flat White -->
+                        <div class="mess">Create account to Order Now!</div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item-1">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="{{url_for('static',filename='img/ChocoTruffleCake.jpeg')}}">
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half"></i>
+                        <label class="cash">&#8377 99</label>
+                        <h3>CHOCO TRUFFLE CAKE</h3>
+                        <label>Chocolate lovers delight! Indulgent, gooey molten lava inside chocolate cake</label>
+                        <!-- Inside the card-body for Flat White -->
+                        <div class="mess">Create account to Order Now!</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Contact  -->
+
+<div class="shop" id="aboutus">
+    <div class="shop-header">
+        <h3>About Us</h3>
+        <h4>Pizza Paradiso</h4>
+    </div>
+
+    <div class="contact" id="contact">
+        
+        <div class="contact-box">
+            <div class="contact-body">
+                    <div class="about">
+                        At Pizza Paradiso, our journey began with a shared passion for crafting exceptional pizzas and fostering memorable dining experiences. Founded in 2023, our humble beginnings trace back to the dream of Navraz, who envisioned a culinary haven where pizza lovers could indulge in handcrafted delicacies made with love and expertise.
+                        <p>Driven by a commitment to excellence and innovation, our mission at Pizza Paradiso is to redefine the pizza experience. We strive to delight our customers with a diverse menu of artisanal pizzas, made from the finest ingredients sourced locally and globally. With a focus on quality, authenticity, and sustainability, we aim to elevate every slice to a gastronomic delight that tantalizes the taste buds and leaves a lasting impression.</p>
+                    </div>
+            </div>
+        </div>
+        <div class="contact-box">
+            <div class="contact-image">
+                <img src="{{url_for('static',filename='img/bgimage.jpg')}}">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer">
+        <div class="footer-box">
+            <div class="social-media">
+                <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://twitter.com/"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://www.youtube.com/"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <div class="copyright">
+                <label>Copyright &copy; 2023</label>
+            </div>
+            <div class="brand">
+                <label>Pizza <span>Paradiso</span></label>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

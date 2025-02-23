@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    transition: all 0.3s ease;
+}
+
+html {
+    font-family: 'Open Sans', sans-serif;
+    scroll-behavior: smooth;
+}
+
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    /* background-color: rgb(82, 78, 78); */
+    background-image: linear-gradient(to bottom right, rgba(103, 83, 83, 0.6), rgba(103, 84, 84, 0.6)), url("img/bg2.jpg");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+
+
+#cartSummary {
+    margin: 100px;
+    padding: 20px;
+    background-color: beige;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative; /* Added for popup positioning */
+}
+
+#cartItems {
+    list-style-type: none;
+    padding: 0;
+    color: rgb(82, 78, 78);
+}
+
+#cartItems li {
+    margin: 10px 0;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    color: rgb(82, 78, 78);
+}
+
+.item-name {
+    flex: 1;
+}
+
+.item-quantity {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-btn {
+    background-color: rgb(82, 78, 78);
+    border: 2px solid rgb(82, 78, 78);
+    border-radius: 4px;
+    color: beige;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px 14px;
+    margin: 8px;
+}
+
+.quantity-btn:hover {
+    background-color: beige;
+    color: rgb(82, 78, 78);
+}
+
+#cartTotal {
+    font-size: 20px;
+    color: rgb(82, 78, 78);
+    font-weight: bold;
+    text-align: center;
+}
+
+#emptyCartMessage {
+    display: none;
+    text-align: center;
+    color: rgb(82, 78, 78);
+}
+
+.popup {
+    display: none;
+}
+
+.popup-message {
+    font-size: 16px;
+}
+
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    width: 100%;
+    height: 70px;
+    /* position: absolute; */
+    z-index: 1;
+    /* position: fixed; */
+    background-color: beige;     
+}
+
+
+.main header .logo a{
+    font-size: 30px;
+    color: rgb(82, 78, 78);
+    padding: 15px 30px;
+}
+
+.main header nav ul {
+    display: flex;
+    
+}
+
+.main header nav ul li a{
+    margin: 5px 20px;
+    font-size: 18px;
+    color: wrgb(82, 78, 78);
+    padding: 8px 8px;
+}
+
+.main header nav ul li a:hover{
+    border-bottom: 2px solid rgb(82, 78, 78);
+}
+
+.pay{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    
+}
+
+#payButton{
+    color: rgb(82, 78, 78);
+    background-color: beige;
+    border: 2px solid beige;
+    padding: 17px;
+    border-radius: 4px;
+    font-size: 15px;
+}
+
+#payButton:hover{
+    background-color: rgb(82, 78, 78);
+    color: beige;
+    border-color: rgb(82, 78, 78);
+}
+
+#payButton:active {
+    background-color: rgb(82, 78, 78);
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}

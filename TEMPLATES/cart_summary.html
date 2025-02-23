@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cartstyle.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="icon" href="{{url_for('static',filename='img/logo.png')}}" type="image/x-icon">
+    <title>Pizza Paradiso</title>
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            padding: 50px;
+        }
+        
+        /* Modal content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+        
+        /* Close button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main">
+    <header>
+        <div class="logo">
+            <a href="">Pizza <span>Paradiso</span></a>
+        </div>
+    <nav>
+        <ul>
+            <li><a href="http://localhost:5000/back">Back To Menu</a></li>
+        </ul>
+    </nav>
+</header>
+</div>
+
+<div id="cartSummary">
+    <ul id="cartItems"></ul>
+    <p id="cartTotal">Grand Total: ₹<span>0</span></p>
+    <p id="emptyCartMessage">Your cart is empty.</p>
+</div>
+
+<div class="pay">
+    <button id="payButton" href="">Pay Now</button>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <a class="close" href="http://localhost:5000/cart_summary">Ok</a>
+        <p>Your order has been successfully placed. Thank you!</p>
+    </div>
+</div>
+
+<script>
+    // Retrieve cart items from session storage
+    var storedCartItems = sessionStorage.getItem('cartItems');
+    var cartItems = storedCartItems ? JSON.parse(storedCartItems) : [];
+
+    // Display cart summary
+    var cartItemsList = document.getElementById('cartItems');
+    var cartTotalElement = document.getElementById('cartTotal').querySelector('span');
+    var emptyCartMessage = document.getElementById('emptyCartMessage');
+
+    // Clear previous items
+    cartItemsList.innerHTML = '';
+
+    // Populate the cart items list and calculate total
+    var total = 0;
+    var itemCounts = {}; // Object to store item counts
+
+    cartItems.forEach(item => {
+        // Check if item already exists in itemCounts
+        if (itemCounts[item.name]) {
+            // If item exists, increment count
+            itemCounts[item.name]++;
+        } else {
+            // If item doesn't exist, initialize count
+            itemCounts[item.name] = 1;
+        }
+
+        // Create list item for the cart
+        var listItem = document.createElement('li');
+        listItem.innerHTML = `
+            <span class="item-name">${item.name} - ₹${item.price}*</span>
+            <div class="item-quantity">
+                <button class="quantity-btn" onclick="decrementOrRemove('${item.name}')">-</button>
+                <span>${itemCounts[item.name]}</span>
+                <button class="quantity-btn" onclick="incrementQuantity('${item.name}')">+</button>
+            </div>
+        `;
+        cartItemsList.appendChild(listItem);
+
+        // Calculate total
+        total += item.price * itemCounts[item.name];
+    });
+
+    // Display the total cost
+    cartTotalElement.textContent = total;
+
+    // Show empty cart message if cart is empty
+    if (cartItems.length === 0) {
+        emptyCartMessage.style.display = 'block';
+    }
+
+    // Function to increment quantity
+    function incrementQuantity(itemName) {
+        itemCounts[itemName]++;
+        updateCart();
+    }
+
+    // Function to decrement quantity or remove item if quantity is zero
+    function decrementOrRemove(itemName) {
+        if (itemCounts[itemName] > 1) {
+            itemCounts[itemName]--;
+        } else {
+            delete itemCounts[itemName]; // Remove item from itemCounts
+        }
+        updateCart();
+    }
+
+    // Function to update the cart summary
+    function updateCart() {
+        // Clear previous items
+        cartItemsList.innerHTML = '';
+
+        // Update cart items list and calculate total
+        var newTotal = 0;
+        for (var itemName in itemCounts) {
+            var itemOccurrence = itemCounts[itemName];
+
+            // Create list item for the cart
+            var listItem = document.createElement('li');
+            listItem.innerHTML = `
+            <span class="item-name">${itemName} - ₹${cartItems.find(item => item.name === itemName).price}</span>
+            <div class="item-quantity">
+                <button class="quantity-btn" onclick="decrementOrRemove('${itemName}')">-</button>
+                <span>${itemOccurrence}</span>
+                <button class="quantity-btn" onclick="incrementQuantity('${itemName}')">+</button>
+                </div>
+                `;
+                cartItemsList.appendChild(listItem);
+                
+                // Calculate total
+                newTotal += cartItems.find(item => item.name === itemName).price * itemOccurrence;
+            }
+            
+            // Display the total cost
+            cartTotalElement.textContent = newTotal;
+            
+            // Update session storage
+            sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+            
+            // Show empty cart message if cart is empty
+            if (Object.keys(itemCounts).length === 0) {
+                emptyCartMessage.style.display = 'block';
+            } else {
+                emptyCartMessage.style.display = 'none';
+            }
+            
+            total += item.price * itemCounts[item.name];
+        }
+
+    // Handle Pay Now button click
+    // Handle Pay Now button click
+// Handle Pay Now button click
+document.getElementById('payButton').addEventListener('click', function() {
+    if (cartItems.length === 0) {
+        alert('Your cart is empty! Please add items to your cart before proceeding.');
+    } else {
+        // Display modal
+        var modal = document.getElementById("myModal");
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        total = 0; // Set total to 0
+        // Clear cart items
+        cartItems = [];
+        sessionStorage.removeItem('cartItems');
+        // Update cart display
+        updateCart();
+    }
+});
+
+</script>
+
+</body>
+</html>
